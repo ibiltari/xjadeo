@@ -1647,7 +1647,7 @@ void display_frame (int64_t timestamp, int force_update) {
 	}
 #if (defined DND && defined PLATFORM_LINUX) || (defined WINMENU && defined PLATFORM_WINDOWS)
 	if (!current_file && !(OSD_mode & OSD_MSG) && getvidmode() != VO_SDL) {
-		sprintf(OSD_msg, "[right-click]");
+	if (!want_nodrawcross)	sprintf(OSD_msg, "[right-click]");
 		OSD_mode |= OSD_MSG | OSD_BOX;
 		OSD_mode &= ~OSD_EQ;
 		OSD_frame[0] = '\0';

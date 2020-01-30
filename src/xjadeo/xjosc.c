@@ -50,7 +50,7 @@ extern double   delay;
 extern int64_t  ts_offset;
 
 extern int _gl_scale_x_modifier;
-extern int _gl_scale_y_modifier
+extern int _gl_scale_y_modifier;
 
 #ifdef HAVE_MIDI
 extern int midi_clkconvert;
