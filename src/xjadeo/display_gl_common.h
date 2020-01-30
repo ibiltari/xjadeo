@@ -152,7 +152,7 @@ static void xjglExpose(uint8_t *buf) {
 	if (!buf) buf = buffer;
 	if (!buf) return;
 	gl_make_current();
-	opengl_draw (movie_width, movie_height, buf);
+	opengl_draw (movie_width + _gl_scale_x_modifier, movie_height + _gl_scale_x_modifier, buf);
 	glFlush();
 	gl_swap_buffers();
 	if (_gl_vblank_sync) {

@@ -35,6 +35,10 @@ static int        _gl_screen;
 static Window     _gl_win;
 static GLXContext _gl_ctx;
 
+// for osc scaling
+static int _gl_scale_x_modifier = 0;
+static int _gl_scale_x_modifier = 0;
+
 extern double framerate;  // used for screensaver
 
 static void gl_sync_lock() { }

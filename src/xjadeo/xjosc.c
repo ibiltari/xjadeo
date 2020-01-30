@@ -49,6 +49,9 @@ extern int64_t  dispFrame;
 extern double   delay;
 extern int64_t  ts_offset;
 
+extern int _gl_scale_x_modifier;
+extern int _gl_scale_y_modifier
+
 #ifdef HAVE_MIDI
 extern int midi_clkconvert;
 extern int midi_clkadj;
@@ -72,9 +75,22 @@ extern double framerate;
 extern char OSD_fontfile[1024];
 extern int OSD_mode;
 
+
 static int oscb_seek (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
   if (want_verbose) fprintf(stderr, "OSC: %s <- i:%i\n", path, argv[0]->i);
   userFrame=argv[0]->i;
+  return(0);
+}
+
+static int oscb_xscale (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- i:%i\n", path, argv[0]->i);
+  _gl_scale_x_modifier=argv[0]->i;
+  return(0);
+}
+
+static int oscb_yscale (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- i:%i\n", path, argv[0]->i);
+  _gl_scale_y_modifier=argv[0]->i;
   return(0);
 }
 
@@ -319,6 +335,10 @@ static struct osc_command OSCC[] = {
   {"/jadeo/midi/connect", "s", &oscb_midiconnect, "Get sync from MTC (MIDI Time Code). The parameter specifies the midi-port to connect to. (-m, -d, midi connect)"},
   {"/jadeo/midi/disconnect", "", &oscb_mididisconnect, "Close the MIDI device (midi disconnect)"},
 #endif
+
+  {"/jadeo/xscale", "i", &oscb_xscale, "Modify x scale of the video"},
+  {"/jadeo/yscale", "i", &oscb_yscale, "Modify y scale of the video"},
+
 
 #if defined CROPIMG || defined OSC_DOC_ALL
   {"/jadeo/art/pan", "i", &oscb_pan, "Set the x-offset to the value given in pixels. 0 ≤ val ≤ movie-width"},
