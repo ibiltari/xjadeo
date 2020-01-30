@@ -78,6 +78,7 @@ extern int      want_debug;
 extern int      want_verbose;
 extern int      want_avverbose;
 extern int      want_nosplash;
+extern int 		want_nodrawcross;
 extern int      want_genpts;
 extern int      want_ignstart;
 extern int      remote_en;
@@ -1583,8 +1584,9 @@ static void render_empty_frame (int blit, int splashagain) {
 	} else {
 		memset (buffer, 0, avpicture_get_size (render_fmt, movie_width, movie_height));
 	}
-#ifdef DRAW_CROSS
-	int x,y;
+	// no cross drawing option
+	if (!want_nodrawcross) {
+		int x,y;
 	if (render_fmt == AV_PIX_FMT_UYVY422)
 		for (x = 0, y = 0;x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
 			int off = (2 * x + 2 * movie_width * y);
@@ -1625,7 +1627,8 @@ static void render_empty_frame (int blit, int splashagain) {
 			buffer[yoff+2]=127;
 			buffer[yoff+3]=255;
 		}
-#endif
+	}
+	
 	if (!splashed || splashagain) {
 		splash(buffer);
 	}

@@ -169,7 +169,6 @@ AH_TEMPLATE([XFIB], [enable xjadeo x11 file browser])
 AH_TEMPLATE([COLOREQ], [enable XV and imlib2 color equalizer])
 AH_TEMPLATE([TIMEMAP], [enable dynamic time scaling])
 AH_TEMPLATE([CROPIMG], [enable frame cropping])
-AH_TEMPLATE([DRAW_CROSS], [paint a X on screen when unable to decode or display a frame.])
 AH_TEMPLATE([WINMENU], [enable xjadeo windows context-menu])
 
 dnl fixed configuration
@@ -178,7 +177,6 @@ AC_DEFINE(DND)
 AC_DEFINE(WINMENU)
 AC_DEFINE(XDLG)
 AC_DEFINE(XFIB)
-AC_DEFINE(DRAW_CROSS)
 AC_DEFINE(COLOREQ)
 
 if test "x$enable_timescale" != "xyes"; then

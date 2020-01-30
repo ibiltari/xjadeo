@@ -169,6 +169,7 @@ int want_avverbose =0;	/* --avverbose */
 int want_genpts =0;	/* --genpts */
 int want_ignstart =0;	/* --ignorefileoffset */
 int want_nosplash =0;	/* --nosplash */
+int want_nodrawcross =0;	/* --nodrawcross */
 int want_noindex =0;	/* --noindex */
 int start_ontop =0;	/* --ontop // -a */
 int start_fullscreen =0;/* --fullscreen // -s */
@@ -276,6 +277,7 @@ static struct option const long_options[] =
 	{"rc",                  required_argument, 0, 'r'},
 #endif
 	{"no-splash",           no_argument, 0,       'S'},
+	{"no-drawcross",           no_argument, 0,       'X'},
 	{"fullscreen",          no_argument, 0,       's'},
 	{"ttf-font",            required_argument, 0, 'T'},
 #ifdef JACK_SESSION
@@ -328,6 +330,7 @@ decode_switches (int argc, char **argv)
 		"R"  /* stdio remote control */
 		"r:" /* --rc */
 		"S"  /* nosplash */
+		"X"  /* no cross drawing */
 		"s"  /* start in full-screen mode */
 		"T:" /* ttf-font */
 #ifdef JACK_SESSION
@@ -431,6 +434,9 @@ decode_switches (int argc, char **argv)
 				break;
 			case 'S':
 				want_nosplash = 1;
+				break;
+			case 'X':
+				want_nodrawcross = 1;
 				break;
 			case 's':
 				start_fullscreen = 1;
@@ -631,6 +637,7 @@ usage (int status)
 "                           and quiet as the terminal is used for interaction.\n"
 " -r <file>, --rc <file>    Specify a custom configuration file to load.\n"
 " -S, --no-splash           Skip the on screen display startup sequence.\n"
+" -X, --no-drawcross        Do not draw the cross when no movie is opened or error decoding.\n"
 " -s, --fullscreen          Start xjadeo in full screen mode.\n"
 " -T <file>, --ttf-file <file>\n"
 "                           path to .ttf font for on screen display\n"
