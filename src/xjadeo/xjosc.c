@@ -49,8 +49,8 @@ extern int64_t  dispFrame;
 extern double   delay;
 extern int64_t  ts_offset;
 
-extern int _gl_scale_x_modifier;
-extern int _gl_scale_y_modifier;
+extern int display_scale_x_modifier;
+extern int display_scale_y_modifier;
 
 #ifdef HAVE_MIDI
 extern int midi_clkconvert;
@@ -84,13 +84,13 @@ static int oscb_seek (const char *path, const char *types, lo_arg **argv, int ar
 
 static int oscb_xscale (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
   if (want_verbose) fprintf(stderr, "OSC: %s <- i:%i\n", path, argv[0]->i);
-  _gl_scale_x_modifier=argv[0]->i;
+  display_scale_x_modifier=argv[0]->i;
   return(0);
 }
 
 static int oscb_yscale (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
   if (want_verbose) fprintf(stderr, "OSC: %s <- i:%i\n", path, argv[0]->i);
-  _gl_scale_y_modifier=argv[0]->i;
+  display_scale_y_modifier=argv[0]->i;
   return(0);
 }
 

@@ -3,7 +3,6 @@
 #ifndef XJADEO_DISPLAY_H
 
 extern int movie_width, movie_height;
-extern int _gl_scale_x_modifier, _gl_scale_y_modifier;
 extern int ffctv_width, ffctv_height;
 extern float movie_aspect;
 extern int loop_flag, loop_run;

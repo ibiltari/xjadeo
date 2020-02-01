@@ -53,6 +53,9 @@ static int          _gl_reexpose = 0;
 static unsigned int _gl_texture_id = 0;
 static int          _gl_vblank_sync = 0;
 
+extern int display_scale_x_modifier;
+extern int display_scale_y_modifier;
+
 ///////////////////////////////////////////////////////////////////////////////
 static void gl_make_current();
 static void gl_clear_current();
@@ -116,6 +119,7 @@ static void gl_init () {
 }
 
 static void opengl_draw (int width, int height, unsigned char* surf_data) {
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -129,17 +133,17 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 			GL_BGRA, GL_UNSIGNED_BYTE, surf_data);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(           0.0f, (GLfloat) height);
+	glTexCoord2f(           0.0f, (GLfloat) height + display_scale_y_modifier);
 	glVertex2f(-_gl_quad_x, -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width, (GLfloat) height);
-	glVertex2f( _gl_quad_x, -_gl_quad_y);
+	glTexCoord2f((GLfloat) width + display_scale_x_modifier, (GLfloat) height + display_scale_y_modifier);
+	glVertex2f( _gl_quad_x , -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width, 0.0f);
-	glVertex2f( _gl_quad_x,  _gl_quad_y);
+	glTexCoord2f((GLfloat) width + display_scale_x_modifier, 0.0f);
+	glVertex2f( _gl_quad_x ,  _gl_quad_y);
 
 	glTexCoord2f(            0.0f, 0.0f);
-	glVertex2f(-_gl_quad_x,  _gl_quad_y);
+	glVertex2f(-_gl_quad_x,  _gl_quad_y );
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
@@ -152,7 +156,7 @@ static void xjglExpose(uint8_t *buf) {
 	if (!buf) buf = buffer;
 	if (!buf) return;
 	gl_make_current();
-	opengl_draw (movie_width + _gl_scale_x_modifier, movie_height + _gl_scale_x_modifier, buf);
+	opengl_draw (movie_width, movie_height, buf);
 	glFlush();
 	gl_swap_buffers();
 	if (_gl_vblank_sync) {

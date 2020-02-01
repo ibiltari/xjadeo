@@ -102,6 +102,11 @@ extern char OSD_nfo_geo[5][48];
 uint64_t    osd_smpte_ts;
 uint64_t    osd_vtc_oob;
 
+//osc scale modification
+int display_scale_x_modifier;
+int display_scale_y_modifier;
+
+
 //------------------------------------------------
 // globals
 //------------------------------------------------
@@ -1411,8 +1416,11 @@ int open_movie (char* file_name) {
 		movie_width = (pCodecCtx->width / 2); // TODO allow configuration
 		movie_height = pCodecCtx->height;
 #else
+
 		movie_width = pCodecCtx->width;
 		movie_height = pCodecCtx->height;
+		
+
 #endif
 
 	/* sample aspect ratio, display aspect ratio */
