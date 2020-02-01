@@ -53,8 +53,8 @@ static int          _gl_reexpose = 0;
 static unsigned int _gl_texture_id = 0;
 static int          _gl_vblank_sync = 0;
 
-extern int display_scale_x_modifier;
-extern int display_scale_y_modifier;
+extern float display_scale_x_modifier;
+extern float display_scale_y_modifier;
 
 ///////////////////////////////////////////////////////////////////////////////
 static void gl_make_current();
@@ -133,13 +133,13 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 			GL_BGRA, GL_UNSIGNED_BYTE, surf_data);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(           0.0f, (GLfloat) height + display_scale_y_modifier);
+	glTexCoord2f(           0.0f, (GLfloat) height + (GLfloat) display_scale_y_modifier);
 	glVertex2f(-_gl_quad_x, -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width + display_scale_x_modifier, (GLfloat) height + display_scale_y_modifier);
+	glTexCoord2f((GLfloat) width + (GLfloat) display_scale_x_modifier, (GLfloat) height + (GLfloat) display_scale_y_modifier);
 	glVertex2f( _gl_quad_x , -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width + display_scale_x_modifier, 0.0f);
+	glTexCoord2f((GLfloat) width + (GLfloat) display_scale_x_modifier, 0.0f);
 	glVertex2f( _gl_quad_x ,  _gl_quad_y);
 
 	glTexCoord2f(            0.0f, 0.0f);

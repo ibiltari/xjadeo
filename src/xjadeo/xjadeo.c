@@ -103,8 +103,8 @@ uint64_t    osd_smpte_ts;
 uint64_t    osd_vtc_oob;
 
 //osc scale modification
-int display_scale_x_modifier;
-int display_scale_y_modifier;
+float display_scale_x_modifier;
+float display_scale_y_modifier;
 
 
 //------------------------------------------------
