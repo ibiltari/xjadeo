@@ -133,16 +133,16 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 			GL_BGRA, GL_UNSIGNED_BYTE, surf_data);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(           0.0f, (GLfloat) height + (GLfloat) display_scale_y_modifier);
+	glTexCoord2f(           0.0f + (GLfloat) display_deform_corners[0], (GLfloat) height + (GLfloat) display_deform_corners[1] );
 	glVertex2f(-_gl_quad_x, -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width + (GLfloat) display_scale_x_modifier, (GLfloat) height + (GLfloat) display_scale_y_modifier);
+	glTexCoord2f((GLfloat) width + (GLfloat) display_deform_corners[2] , (GLfloat) height + (GLfloat) display_deform_corners[3] );
 	glVertex2f( _gl_quad_x , -_gl_quad_y);
 
-	glTexCoord2f((GLfloat) width + (GLfloat) display_scale_x_modifier, 0.0f);
+	glTexCoord2f((GLfloat) width + (GLfloat) display_deform_corners[4], 0.0f + (GLfloat) display_deform_corners[5]);
 	glVertex2f( _gl_quad_x ,  _gl_quad_y);
 
-	glTexCoord2f(            0.0f, 0.0f);
+	glTexCoord2f(            0.0f + (GLfloat) display_deform_corners[6], 0.0f + (GLfloat) display_deform_corners[7]);
 	glVertex2f(-_gl_quad_x,  _gl_quad_y );
 	glEnd();
 

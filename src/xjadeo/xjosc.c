@@ -51,6 +51,7 @@ extern int64_t  ts_offset;
 
 extern float display_scale_x_modifier;
 extern float display_scale_y_modifier;
+extern float display_deform_corners[8];
 
 #ifdef HAVE_MIDI
 extern int midi_clkconvert;
@@ -95,6 +96,18 @@ static int oscb_yscale (const char *path, const char *types, lo_arg **argv, int 
   force_redraw=1;
   return(0);
 }
+
+static int oscb_corners (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- vec8:%f,%f,%f,%f,%f,%f,%f,%f \n", path, argv[0]->f, argv[1]->f, argv[2]->f, argv[3]->f, argv[4]->f, argv[5]->f, argv[6]->f, argv[7]->f);
+  for (size_t i = 0; i < 8; i++)
+  {
+   display_deform_corners[i]=argv[i]->f;
+  }
+  force_redraw=1;
+  return(0);
+}
+
+
 
 static int oscb_fps (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
   if (want_verbose) fprintf(stderr, "OSC: %s <- f:%f\n", path, argv[0]->f);
@@ -340,7 +353,7 @@ static struct osc_command OSCC[] = {
 
   {"/jadeo/xscale", "f", &oscb_xscale, "Modify x scale of the video"},
   {"/jadeo/yscale", "f", &oscb_yscale, "Modify y scale of the video"},
-
+  {"/jadeo/corners", "ffffffff", &oscb_corners, "Modify corner deformation"},
 
 #if defined CROPIMG || defined OSC_DOC_ALL
   {"/jadeo/art/pan", "i", &oscb_pan, "Set the x-offset to the value given in pixels. 0 ≤ val ≤ movie-width"},

@@ -105,6 +105,7 @@ uint64_t    osd_vtc_oob;
 //osc scale modification
 float display_scale_x_modifier;
 float display_scale_y_modifier;
+float display_deform_corners[8]= { };
 
 
 //------------------------------------------------
