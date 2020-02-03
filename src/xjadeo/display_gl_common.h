@@ -55,6 +55,7 @@ static int          _gl_vblank_sync = 0;
 
 extern float display_scale_x_modifier;
 extern float display_scale_y_modifier;
+extern float display_deform_corners[8];
 
 ///////////////////////////////////////////////////////////////////////////////
 static void gl_make_current();
@@ -133,17 +134,17 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 			GL_BGRA, GL_UNSIGNED_BYTE, surf_data);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(           0.0f + (GLfloat) display_deform_corners[0], (GLfloat) height + (GLfloat) display_deform_corners[1] );
-	glVertex2f(-_gl_quad_x, -_gl_quad_y);
+	glTexCoord2f(           0.0f, (GLfloat) height);
+	glVertex2f(-_gl_quad_x+ (GLfloat) display_deform_corners[0], -_gl_quad_y+ (GLfloat) display_deform_corners[1]);
 
-	glTexCoord2f((GLfloat) width + (GLfloat) display_deform_corners[2] , (GLfloat) height + (GLfloat) display_deform_corners[3] );
-	glVertex2f( _gl_quad_x , -_gl_quad_y);
+	glTexCoord2f((GLfloat) width, (GLfloat) height);
+	glVertex2f( _gl_quad_x + (GLfloat) display_deform_corners[2] , -_gl_quad_y + (GLfloat) display_deform_corners[3]);
 
-	glTexCoord2f((GLfloat) width + (GLfloat) display_deform_corners[4], 0.0f + (GLfloat) display_deform_corners[5]);
-	glVertex2f( _gl_quad_x ,  _gl_quad_y);
+	glTexCoord2f((GLfloat) width, 0.0f);
+	glVertex2f( _gl_quad_x + (GLfloat) display_deform_corners[4] ,  _gl_quad_y + (GLfloat) display_deform_corners[5]);
 
-	glTexCoord2f(            0.0f + (GLfloat) display_deform_corners[6], 0.0f + (GLfloat) display_deform_corners[7]);
-	glVertex2f(-_gl_quad_x,  _gl_quad_y );
+	glTexCoord2f(            0.0f, 0.0f);
+	glVertex2f(-_gl_quad_x + (GLfloat) display_deform_corners[6],  _gl_quad_y + (GLfloat) display_deform_corners[7] );
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
