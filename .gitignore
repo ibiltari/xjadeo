@@ -60,3 +60,4 @@ Makefile.in
 # misc
 /doc/html/
 /doc/old/
+.vscode

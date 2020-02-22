@@ -18,6 +18,7 @@
  */
 
 #include "xjadeo.h"
+#include "homography.h"
 #ifdef HAVE_GL
 
 #include <stdio.h>
@@ -120,8 +121,33 @@ static void gl_init () {
 }
 
 static void opengl_draw (int width, int height, unsigned char* surf_data) {
+
+
+	Point src[4];
+	Point dest[4];
+	float homograpy[16];
+
+	src[0].x = -_gl_quad_x + (GLfloat) display_deform_corners[0];
+	src[0].y = -_gl_quad_y + (GLfloat) display_deform_corners[1];
+
+	src[1].x = _gl_quad_x + (GLfloat) display_deform_corners[2];
+	src[1].y = -_gl_quad_y + (GLfloat) display_deform_corners[3];
+
+	src[2].x = _gl_quad_x + (GLfloat) display_deform_corners[4];
+	src[2].y = _gl_quad_y + (GLfloat) display_deform_corners[5];
+
+	src[3].x = _gl_quad_x + (GLfloat) display_deform_corners[6];
+	src[3].y = -_gl_quad_y + (GLfloat) display_deform_corners[7];
+
+	findHomography(src, dest, homograpy);
 	
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(homograpy);
+	
+	//glMultMatrixf(homotrapy);
+
+	
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 
