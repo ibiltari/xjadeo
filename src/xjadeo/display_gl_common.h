@@ -136,8 +136,8 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 	src[2].x = _gl_quad_x + (GLfloat) display_deform_corners[4];
 	src[2].y = _gl_quad_y + (GLfloat) display_deform_corners[5];
 
-	src[3].x = _gl_quad_x + (GLfloat) display_deform_corners[6];
-	src[3].y = -_gl_quad_y + (GLfloat) display_deform_corners[7];
+	src[3].x = -_gl_quad_x + (GLfloat) display_deform_corners[6];
+	src[3].y = _gl_quad_y + (GLfloat) display_deform_corners[7];
 
 	findHomography(src, dest, homograpy);
 	
@@ -161,16 +161,16 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(           0.0f, (GLfloat) height);
-	glVertex2f(-_gl_quad_x+ (GLfloat) display_deform_corners[0], -_gl_quad_y+ (GLfloat) display_deform_corners[1]);
+	glVertex2f(src[0].x, src[0].y);
 
 	glTexCoord2f((GLfloat) width, (GLfloat) height);
-	glVertex2f( _gl_quad_x + (GLfloat) display_deform_corners[2] , -_gl_quad_y + (GLfloat) display_deform_corners[3]);
+	glVertex2f( src[1].x , src[1].y);
 
 	glTexCoord2f((GLfloat) width, 0.0f);
-	glVertex2f( _gl_quad_x + (GLfloat) display_deform_corners[4] ,  _gl_quad_y + (GLfloat) display_deform_corners[5]);
+	glVertex2f( src[2].x ,  src[2].y );
 
 	glTexCoord2f(            0.0f, 0.0f);
-	glVertex2f(-_gl_quad_x + (GLfloat) display_deform_corners[6],  _gl_quad_y + (GLfloat) display_deform_corners[7] );
+	glVertex2f(src[3].x, src[3].y);
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);

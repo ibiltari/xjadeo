@@ -10,18 +10,23 @@
 #pragma once
 
 // #include "ofMain.h"
+#ifdef __APPLE__
+#include "OpenGL/glu.h"
+#else
+#include <GL/glu.h>
+#endif
 
 typedef struct {
-	float x;
-	float y;
+	GLfloat x;
+	GLfloat y;
 } Point;
 
 
-void gaussian_elimination(float *input, int n){
+void gaussian_elimination(GLfloat *input, int n){
 	// ported to c from pseudocode in
 	// http://en.wikipedia.org/wiki/Gaussian_elimination
 
-	float * A = input;
+	GLfloat * A = input;
 	int i = 0;
 	int j = 0;
 	int m = n-1;
@@ -37,20 +42,20 @@ void gaussian_elimination(float *input, int n){
 	    //swap rows i and maxi, but do not change the value of i
 		if(i!=maxi)
 		for(int k=0;k<n;k++){
-			float aux = A[i*n+k];
+			GLfloat aux = A[i*n+k];
 			A[i*n+k]=A[maxi*n+k];
 			A[maxi*n+k]=aux;
 		}
 	    //Now A[i,j] will contain the old value of A[maxi,j].
 	    //divide each entry in row i by A[i,j]
-		float A_ij=A[i*n+j];
+		GLfloat A_ij=A[i*n+j];
 		for(int k=0;k<n;k++){
 			A[i*n+k]/=A_ij;
 		}
 	    //Now A[i,j] will have the value 1.
 	    for(int u = i+1; u< m; u++){
     		//subtract A[u,j] * row i from row u
-	    	float A_uj = A[u*n+j];
+	    	GLfloat A_uj = A[u*n+j];
 	    	for(int k=0;k<n;k++){
 	    		A[u*n+k]-=A_uj*A[i*n+k];
 	    	}
@@ -71,7 +76,7 @@ void gaussian_elimination(float *input, int n){
 	}
 }
 
-void findHomography(Point src[4], Point dst[4], float homography[16]){
+void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 
 	// create the equation system to be solved
 	//
@@ -91,7 +96,7 @@ void findHomography(Point src[4], Point dst[4], float homography[16]){
 	// after ordering the terms it gives the following matrix
 	// that can be solved with gaussian elimination:
 
-	float P[8][9]={
+	GLfloat P[8][9]={
 			{-src[0].x, -src[0].y, -1,   0,   0,  0, src[0].x*dst[0].x, src[0].y*dst[0].x, -dst[0].x }, // h11
 			{  0,   0,  0, -src[0].x, -src[0].y, -1, src[0].x*dst[0].y, src[0].y*dst[0].y, -dst[0].y }, // h12
 
@@ -110,7 +115,7 @@ void findHomography(Point src[4], Point dst[4], float homography[16]){
 	// gaussian elimination gives the results of the equation system
 	// in the last column of the original matrix.
 	// opengl needs the transposed 4x4 matrix:
-	float aux_H[]={ P[0][8],P[3][8],0,P[6][8], // h11  h21 0 h31
+	GLfloat aux_H[]={ P[0][8],P[3][8],0,P[6][8], // h11  h21 0 h31
 					P[1][8],P[4][8],0,P[7][8], // h12  h22 0 h32
 					0      ,      0,0,0,       // 0    0   0 0
 					P[2][8],P[5][8],0,1};      // h13  h23 0 h33
