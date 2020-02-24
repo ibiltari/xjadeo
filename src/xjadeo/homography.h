@@ -17,16 +17,16 @@
 #endif
 
 typedef struct {
-	GLfloat x;
-	GLfloat y;
+	float x;
+	float y;
 } Point;
 
 
-void gaussian_elimination(GLfloat *input, int n){
+void gaussian_elimination(float *input, int n){
 	// ported to c from pseudocode in
 	// http://en.wikipedia.org/wiki/Gaussian_elimination
 
-	GLfloat * A = input;
+	float * A = input;
 	int i = 0;
 	int j = 0;
 	int m = n-1;
@@ -48,14 +48,14 @@ void gaussian_elimination(GLfloat *input, int n){
 		}
 	    //Now A[i,j] will contain the old value of A[maxi,j].
 	    //divide each entry in row i by A[i,j]
-		GLfloat A_ij=A[i*n+j];
+		float A_ij=A[i*n+j];
 		for(int k=0;k<n;k++){
 			A[i*n+k]/=A_ij;
 		}
 	    //Now A[i,j] will have the value 1.
 	    for(int u = i+1; u< m; u++){
     		//subtract A[u,j] * row i from row u
-	    	GLfloat A_uj = A[u*n+j];
+	    	float A_uj = A[u*n+j];
 	    	for(int k=0;k<n;k++){
 	    		A[u*n+k]-=A_uj*A[i*n+k];
 	    	}
@@ -96,7 +96,7 @@ void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 	// after ordering the terms it gives the following matrix
 	// that can be solved with gaussian elimination:
 
-	GLfloat P[8][9]={
+	float P[8][9]={
 			{-src[0].x, -src[0].y, -1,   0,   0,  0, src[0].x*dst[0].x, src[0].y*dst[0].x, -dst[0].x }, // h11
 			{  0,   0,  0, -src[0].x, -src[0].y, -1, src[0].x*dst[0].y, src[0].y*dst[0].y, -dst[0].y }, // h12
 
@@ -120,7 +120,7 @@ void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 					0      ,      0,0,0,       // 0    0   0 0
 					P[2][8],P[5][8],0,1};      // h13  h23 0 h33
 
-	for(int i=0;i<16;i++) homography[i] = aux_H[i];
+	for(int i=0;i<16;i++) homography[i] = (GLfloat)aux_H[i];
 }
 
 

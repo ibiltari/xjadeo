@@ -89,50 +89,13 @@ static void gl_reshape(int width, int height) {
 
 static int gl_reallocate_texture(int width, int height) {
 
-	Point src[4];
-	Point dest[4];
-	float homograpy[16];
-
-	//we set it to the default - 0 translation
-	//and 1.0 scale for x y z and w
-	for(int i = 0; i < 16; i++){
-		if(i % 5 != 0) homograpy[i] = 0.0;
-		else homograpy[i] = 1.0;
-	} 
-
-	src[0].x = -_gl_quad_x ;
-	src[0].y = -_gl_quad_y ;
-
-	dest[0].x = src[0].x + (GLfloat) display_deform_corners[0];
-	dest[0].y = src[0].y + (GLfloat) display_deform_corners[1];
-
-	src[1].x = _gl_quad_x;
-	src[1].y = -_gl_quad_y;
-
-	dest[1].x = src[1].x + (GLfloat) display_deform_corners[2];
-	dest[1].y = src[1].y + (GLfloat) display_deform_corners[3];
-
-	src[2].x = _gl_quad_x;
-	src[2].y = _gl_quad_y;
-
-	dest[2].x = src[2].x + (GLfloat) display_deform_corners[4];
-	dest[2].y = src[2].y + (GLfloat) display_deform_corners[5];
-
-	src[3].x = -_gl_quad_x;
-	src[3].y = _gl_quad_y;
-
-	dest[3].x = src[3].x + (GLfloat) display_deform_corners[6];
-	dest[3].y = src[3].y + (GLfloat) display_deform_corners[7];
+	
 
 	glDeleteTextures (1, &_gl_texture_id);
 	glViewport (0, 0, _gl_width, _gl_height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	findHomography(src, dest, homograpy);
-	glPushMatrix();     
-	glMultMatrixf(homograpy);  
 	
-
 	//glOrtho (-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	glClear (GL_COLOR_BUFFER_BIT);
 
@@ -154,7 +117,6 @@ static int gl_reallocate_texture(int width, int height) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 #endif
-	glPopMatrix();
 	return 0;
 }
 
@@ -167,41 +129,56 @@ static void gl_init () {
 }
 
 static void opengl_draw (int width, int height, unsigned char* surf_data) {
-
+	
 	Point src[4];
 	Point dest[4];
-	float homograpy[16];
+	GLfloat homograpy[16];
+
+	//we set it to the default - 0 translation
+	//and 1.0 scale for x y z and w
+	for(int i = 0; i < 16; i++){
+		if(i % 5 != 0) homograpy[i] = 0.0;
+		else homograpy[i] = 1.0;
+	} 
 
 	src[0].x = -_gl_quad_x ;
 	src[0].y = -_gl_quad_y ;
 
-	dest[0].x = src[0].x + (GLfloat) display_deform_corners[0];
-	dest[0].y = src[0].y + (GLfloat) display_deform_corners[1];
-
 	src[1].x = _gl_quad_x;
 	src[1].y = -_gl_quad_y;
-
-	dest[1].x = src[1].x + (GLfloat) display_deform_corners[2];
-	dest[1].y = src[1].y + (GLfloat) display_deform_corners[3];
 
 	src[2].x = _gl_quad_x;
 	src[2].y = _gl_quad_y;
 
-	dest[2].x = src[2].x + (GLfloat) display_deform_corners[4];
-	dest[2].y = src[2].y + (GLfloat) display_deform_corners[5];
-
 	src[3].x = -_gl_quad_x;
 	src[3].y = _gl_quad_y;
 
-	dest[3].x = src[3].x + (GLfloat) display_deform_corners[6];
-	dest[3].y = src[3].y + (GLfloat) display_deform_corners[7];
+	dest[0].x = src[0].x + display_deform_corners[0];
+	dest[0].y = src[0].y + display_deform_corners[1];
+	dest[1].x = src[1].x + display_deform_corners[2];
+	dest[1].y = src[1].y + display_deform_corners[3];
+	dest[2].x = src[2].x + display_deform_corners[4];
+	dest[2].y = src[2].y + display_deform_corners[5];
+	dest[3].x = src[3].x + display_deform_corners[6];
+	dest[3].y = src[3].y + display_deform_corners[7];
+
+
+	// dest[0].x = display_deform_corners[0] * (float)_gl_width;
+	// dest[0].y = display_deform_corners[1] * (float)_gl_height;
+	// dest[1].x = display_deform_corners[2] * (float)_gl_width;
+	// dest[1].y = display_deform_corners[3] * (float)_gl_height;
+	// dest[2].x = display_deform_corners[4] * (float)_gl_width;
+	// dest[2].y = display_deform_corners[5] * (float)_gl_height;
+	// dest[3].x = display_deform_corners[6] * (float)_gl_width;
+	// dest[3].y = display_deform_corners[7] * (float)_gl_height;
+
 
 
 	
 	
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
-	//glMultMatrixf(homograpy);
+	
 
 	
 
@@ -213,8 +190,14 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	findHomography(src, dest, homograpy);
+	glMultMatrixf(homograpy);  
+
+
+	
 	glPushMatrix ();		
 
+	
 	glEnable(GL_TEXTURE_2D);
 	//gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, _gl_texture_id);
@@ -224,20 +207,21 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(           0.0f, (GLfloat) height);
-	glVertex2f(dest[0].x, dest[0].y);
+	glVertex2f(-_gl_quad_x, -_gl_quad_y);
 
 	glTexCoord2f((GLfloat) width, (GLfloat) height);
-	glVertex2f( dest[1].x , dest[1].y);
+	glVertex2f( _gl_quad_x, -_gl_quad_y);
 
 	glTexCoord2f((GLfloat) width, 0.0f);
-	glVertex2f( dest[2].x ,  dest[2].y );
+	glVertex2f( _gl_quad_x,  _gl_quad_y);
 
 	glTexCoord2f(            0.0f, 0.0f);
-	glVertex2f(dest[3].x, dest[3].y);
+	glVertex2f(-_gl_quad_x,  _gl_quad_y);
 	glEnd();
-
+	
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
