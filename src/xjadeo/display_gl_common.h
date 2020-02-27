@@ -67,6 +67,11 @@ static void gl_sync_unlock();
 
 /////////////
 #ifdef WARP
+extern double display_scale_x_modifier;
+extern double display_scale_y_modifier;
+extern double display_deform_corners[8];
+extern int recalculate_homography;
+
 GLfloat homograpy[16];
 Point src[4];
 Point dest[4];
