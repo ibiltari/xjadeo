@@ -140,7 +140,10 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 #ifdef WARP
+
 	if (recalculate_homography==1) {
+
+		
 
 		src[0].x = -_gl_quad_x ;
 		src[0].y = -_gl_quad_y ;
@@ -181,6 +184,7 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 			GL_BGRA, GL_UNSIGNED_BYTE, surf_data);
 
 	glBegin(GL_QUADS);
+	#ifndef WARP
 	glTexCoord2f(           0.0f, (GLfloat) height);
 	glVertex2f(-_gl_quad_x, -_gl_quad_y);
 
@@ -192,6 +196,19 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 
 	glTexCoord2f(            0.0f, 0.0f);
 	glVertex2f(-_gl_quad_x,  _gl_quad_y);
+	#else
+	glTexCoord2f(           0.0f, (GLfloat) height);
+	glVertex2f(-_gl_quad_x * (GLfloat)display_scale_x_modifier, -_gl_quad_y * (GLfloat)display_scale_y_modifier);
+
+	glTexCoord2f((GLfloat) width, (GLfloat) height);
+	glVertex2f( _gl_quad_x * (GLfloat)display_scale_x_modifier, -_gl_quad_y * (GLfloat)display_scale_y_modifier);
+
+	glTexCoord2f((GLfloat) width, 0.0f);
+	glVertex2f( _gl_quad_x * (GLfloat)display_scale_x_modifier,  _gl_quad_y * (GLfloat)display_scale_y_modifier);
+
+	glTexCoord2f(            0.0f, 0.0f);
+	glVertex2f(-_gl_quad_x * (GLfloat)display_scale_x_modifier,  _gl_quad_y * (GLfloat)display_scale_y_modifier);
+	#endif
 	glEnd();
 	
 	glDisable(GL_TEXTURE_2D);

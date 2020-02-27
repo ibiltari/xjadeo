@@ -109,8 +109,8 @@ uint64_t    osd_vtc_oob;
 //------------------------------------------------
 #ifdef WARP
 //osc scale modification
-double display_scale_x_modifier = 0;
-double display_scale_y_modifier = 0;
+double display_scale_x_modifier = 1;
+double display_scale_y_modifier = 1;
 double display_deform_corners[8]= {0};
 int recalculate_homography = 1; // we need to calculte it the first time, then only recalculate when corresponding osc messages arrive
 #endif
@@ -1599,46 +1599,46 @@ static void render_empty_frame (int blit, int splashagain) {
 	// no cross drawing option
 	if (!want_nodrawcross) {
 		int x,y;
-	if (render_fmt == AV_PIX_FMT_UYVY422)
-		for (x = 0, y = 0;x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
-			int off = (2 * x + 2 * movie_width * y);
-			buffer[off]=127; buffer[off+1]=127;
+		if (render_fmt == AV_PIX_FMT_UYVY422)
+			for (x = 0, y = 0;x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
+				int off = (2 * x + 2 * movie_width * y);
+				buffer[off]=127; buffer[off+1]=127;
 
-			off = (2 * x + 2 * movie_width * (movie_height - y - 1));
-			buffer[off]=127; buffer[off+1]=127;
-		}
-	if (render_fmt == AV_PIX_FMT_YUV420P)
-		for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
-			int yoff = (x + movie_width * y);
-			buffer[yoff]=127; buffer[yoff+1]=127;
+				off = (2 * x + 2 * movie_width * (movie_height - y - 1));
+				buffer[off]=127; buffer[off+1]=127;
+			}
+		if (render_fmt == AV_PIX_FMT_YUV420P)
+			for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
+				int yoff = (x + movie_width * y);
+				buffer[yoff]=127; buffer[yoff+1]=127;
 
-			yoff = (x + movie_width * (movie_height - y - 1));
-			buffer[yoff]=127; buffer[yoff+1]=127;
-		}
-	if (render_fmt == AV_PIX_FMT_RGB24)
-		for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
-			int yoff = 3 * (x + movie_width * y);
-			buffer[yoff]=127;
-			buffer[yoff+1]=127;
-			buffer[yoff+2]=127;
-			yoff = 3 * (x + movie_width * (movie_height - y - 1));
-			buffer[yoff]=127;
-			buffer[yoff+1]=127;
-			buffer[yoff+2]=127;
-		}
-	if (render_fmt == AV_PIX_FMT_RGBA32 || render_fmt == AV_PIX_FMT_BGRA32)
-		for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
-			int yoff = 4 * (x + movie_width * y);
-			buffer[yoff]=127;
-			buffer[yoff+1]=127;
-			buffer[yoff+2]=127;
-			buffer[yoff+3]=255;
-			yoff = 4 * (x + movie_width * (movie_height - y - 1));
-			buffer[yoff]=127;
-			buffer[yoff+1]=127;
-			buffer[yoff+2]=127;
-			buffer[yoff+3]=255;
-		}
+				yoff = (x + movie_width * (movie_height - y - 1));
+				buffer[yoff]=127; buffer[yoff+1]=127;
+			}
+		if (render_fmt == AV_PIX_FMT_RGB24)
+			for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
+				int yoff = 3 * (x + movie_width * y);
+				buffer[yoff]=127;
+				buffer[yoff+1]=127;
+				buffer[yoff+2]=127;
+				yoff = 3 * (x + movie_width * (movie_height - y - 1));
+				buffer[yoff]=127;
+				buffer[yoff+1]=127;
+				buffer[yoff+2]=127;
+			}
+		if (render_fmt == AV_PIX_FMT_RGBA32 || render_fmt == AV_PIX_FMT_BGRA32)
+			for (x = 0, y = 0; x < movie_width - 1; ++x, y = movie_height * x / movie_width) {
+				int yoff = 4 * (x + movie_width * y);
+				buffer[yoff]=127;
+				buffer[yoff+1]=127;
+				buffer[yoff+2]=127;
+				buffer[yoff+3]=255;
+				yoff = 4 * (x + movie_width * (movie_height - y - 1));
+				buffer[yoff]=127;
+				buffer[yoff+1]=127;
+				buffer[yoff+2]=127;
+				buffer[yoff+3]=255;
+			}
 	}
 	
 	if (!splashed || splashagain) {
