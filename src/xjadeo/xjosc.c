@@ -107,6 +107,42 @@ static int oscb_corners (const char *path, const char *types, lo_arg **argv, int
   return(0);
 }
 
+static int oscb_corner1 (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- vec2:%f,%f \n", path, argv[0]->f, argv[1]->f);
+  
+   display_deform_corners[0]=argv[0]->f;
+   display_deform_corners[1]=argv[1]->f;
+  force_redraw=1;
+  return(0);
+}
+
+static int oscb_corner2 (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- vec2:%f,%f \n", path, argv[0]->f, argv[1]->f);
+  
+   display_deform_corners[2]=-argv[0]->f;
+   display_deform_corners[3]=argv[1]->f;
+  force_redraw=1;
+  return(0);
+}
+
+static int oscb_corner3 (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- vec2:%f,%f \n", path, argv[0]->f, argv[1]->f);
+  
+   display_deform_corners[4]=argv[0]->f;
+   display_deform_corners[5]=argv[1]->f;
+  force_redraw=1;
+  return(0);
+}
+
+static int oscb_corner4(const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
+  if (want_verbose) fprintf(stderr, "OSC: %s <- vec2:%f,%f \n", path, argv[0]->f, argv[1]->f);
+  
+   display_deform_corners[6]=argv[0]->f;
+   display_deform_corners[7]=argv[1]->f;
+  force_redraw=1;
+  return(0);
+}
+
 
 
 static int oscb_fps (const char *path, const char *types, lo_arg **argv, int argc, lo_message msg, void *user_data){
@@ -353,7 +389,11 @@ static struct osc_command OSCC[] = {
 
   {"/jadeo/xscale", "f", &oscb_xscale, "Modify x scale of the video"},
   {"/jadeo/yscale", "f", &oscb_yscale, "Modify y scale of the video"},
-  {"/jadeo/corners", "ffffffff", &oscb_corners, "Modify corner deformation"},
+  {"/jadeo/corners", "ffffffff", &oscb_corners, "Modify corner deformation, all corners at one"},
+  {"/jadeo/corner1", "ff", &oscb_corner1, "Modify corner deformation by corner number"},
+  {"/jadeo/corner2", "ff", &oscb_corner2, "Modify corner deformation by corner number"},
+  {"/jadeo/corner3", "ff", &oscb_corner3, "Modify corner deformation by corner number"},
+  {"/jadeo/corner4", "ff", &oscb_corner4, "Modify corner deformation by corner number"},
 
 #if defined CROPIMG || defined OSC_DOC_ALL
   {"/jadeo/art/pan", "i", &oscb_pan, "Set the x-offset to the value given in pixels. 0 ≤ val ≤ movie-width"},
