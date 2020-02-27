@@ -56,9 +56,9 @@ extern char midiid[32];
 #endif
 
 #ifdef WARP
-extern float display_scale_x_modifier;
-extern float display_scale_y_modifier;
-extern float display_deform_corners[8];
+extern double display_scale_x_modifier;
+extern double display_scale_y_modifier;
+extern double display_deform_corners[8];
 extern int recalculate_homography;
 #endif
 

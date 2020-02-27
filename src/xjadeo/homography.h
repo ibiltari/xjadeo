@@ -1,32 +1,33 @@
 /*
  * homography.h
  *
- *  Created on: 08/01/2010
- *      Author: arturo castro
+ *  based on code from arturo castro
  * 
- *  http://forum.openframeworks.cc/index.php/topic,3121.0.html
+ *
  */
+#ifndef XJ_HOMOGRAPHY_H
+#define XJ_HOMOGRAPHY_H
 
-#pragma once
+#ifdef HAVE_GL
 
-// #include "ofMain.h"
 #ifdef __APPLE__
 #include "OpenGL/glu.h"
 #else
 #include <GL/glu.h>
 #endif
 
+
 typedef struct {
-	float x;
-	float y;
+	double x;
+	double y;
 } Point;
 
 
-void gaussian_elimination(float *input, int n){
+void gaussian_elimination(double *input, int n){
 	// ported to c from pseudocode in
 	// http://en.wikipedia.org/wiki/Gaussian_elimination
 
-	float * A = input;
+	double * A = input;
 	int i = 0;
 	int j = 0;
 	int m = n-1;
@@ -48,14 +49,14 @@ void gaussian_elimination(float *input, int n){
 		}
 	    //Now A[i,j] will contain the old value of A[maxi,j].
 	    //divide each entry in row i by A[i,j]
-		float A_ij=A[i*n+j];
+		double A_ij=A[i*n+j];
 		for(int k=0;k<n;k++){
 			A[i*n+k]/=A_ij;
 		}
 	    //Now A[i,j] will have the value 1.
 	    for(int u = i+1; u< m; u++){
     		//subtract A[u,j] * row i from row u
-	    	float A_uj = A[u*n+j];
+	    	double A_uj = A[u*n+j];
 	    	for(int k=0;k<n;k++){
 	    		A[u*n+k]-=A_uj*A[i*n+k];
 	    	}
@@ -84,7 +85,7 @@ void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 	//       Hartley R. and Zisserman A.
 	//
 	// x' = xH
-	// where H is the homography: a 3 by 3 matrix
+	// where H is the homography: a 4 by 4 matrix
 	// that transformed to inhomogeneous coordinates for each point
 	// gives the following equations for each point:
 	//
@@ -96,7 +97,7 @@ void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 	// after ordering the terms it gives the following matrix
 	// that can be solved with gaussian elimination:
 
-	float P[8][9]={
+	double P[8][9]={
 			{-src[0].x, -src[0].y, -1,   0,   0,  0, src[0].x*dst[0].x, src[0].y*dst[0].x, -dst[0].x }, // h11
 			{  0,   0,  0, -src[0].x, -src[0].y, -1, src[0].x*dst[0].y, src[0].y*dst[0].y, -dst[0].y }, // h12
 
@@ -115,13 +116,14 @@ void findHomography(Point src[4], Point dst[4], GLfloat homography[16]){
 	// gaussian elimination gives the results of the equation system
 	// in the last column of the original matrix.
 	// opengl needs the transposed 4x4 matrix:
-	GLfloat aux_H[]={ P[0][8],P[3][8],0,P[6][8], // h11  h21 0 h31
+	double aux_H[]={ P[0][8],P[3][8],0,P[6][8], // h11  h21 0 h31
 					P[1][8],P[4][8],0,P[7][8], // h12  h22 0 h32
 					0      ,      0,0,0,       // 0    0   0 0
 					P[2][8],P[5][8],0,1};      // h13  h23 0 h33
 
 	for(int i=0;i<16;i++) homography[i] = (GLfloat)aux_H[i];
 }
-
+#endif
+#endif // XJ_HOMOGRAPHY_H
 
 
