@@ -181,7 +181,7 @@ AC_DEFINE(XDLG)
 AC_DEFINE(XFIB)
 AC_DEFINE(COLOREQ)
 
-if test "x$enable_warp" != "xyes"; then
+if test "x$enable_warp" = "xyes"; then
 	AC_DEFINE(WARP)
 fi
 
