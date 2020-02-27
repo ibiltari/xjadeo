@@ -52,6 +52,7 @@ extern int64_t  ts_offset;
 extern float display_scale_x_modifier;
 extern float display_scale_y_modifier;
 extern float display_deform_corners[8];
+extern int recalculate_homography;
 
 #ifdef HAVE_MIDI
 extern int midi_clkconvert;
@@ -104,6 +105,7 @@ static int oscb_corners (const char *path, const char *types, lo_arg **argv, int
    display_deform_corners[i]=argv[i]->f;
   }
   force_redraw=1;
+  recalculate_homography=1;
   return(0);
 }
 
@@ -113,6 +115,7 @@ static int oscb_corner1 (const char *path, const char *types, lo_arg **argv, int
    display_deform_corners[0]=argv[0]->f;
    display_deform_corners[1]=argv[1]->f;
   force_redraw=1;
+  recalculate_homography=1;
   return(0);
 }
 
@@ -122,6 +125,7 @@ static int oscb_corner2 (const char *path, const char *types, lo_arg **argv, int
    display_deform_corners[2]=-argv[0]->f;
    display_deform_corners[3]=argv[1]->f;
   force_redraw=1;
+  recalculate_homography=1;
   return(0);
 }
 
@@ -131,6 +135,7 @@ static int oscb_corner3 (const char *path, const char *types, lo_arg **argv, int
    display_deform_corners[4]=argv[0]->f;
    display_deform_corners[5]=argv[1]->f;
   force_redraw=1;
+  recalculate_homography=1;
   return(0);
 }
 
@@ -140,6 +145,7 @@ static int oscb_corner4(const char *path, const char *types, lo_arg **argv, int 
    display_deform_corners[6]=argv[0]->f;
    display_deform_corners[7]=argv[1]->f;
   force_redraw=1;
+  recalculate_homography=1;
   return(0);
 }
 

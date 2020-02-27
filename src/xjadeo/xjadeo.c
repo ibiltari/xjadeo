@@ -103,9 +103,10 @@ uint64_t    osd_smpte_ts;
 uint64_t    osd_vtc_oob;
 
 //osc scale modification
-float display_scale_x_modifier;
-float display_scale_y_modifier;
-float display_deform_corners[8]= { };
+float display_scale_x_modifier = 0;
+float display_scale_y_modifier = 0;
+float display_deform_corners[8]= {0};
+int recalculate_homography = 1; // we need to calculte it the first time, then only recalculate when corresponding osc messages arrive
 
 
 //------------------------------------------------

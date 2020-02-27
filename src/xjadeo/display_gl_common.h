@@ -57,6 +57,7 @@ static int          _gl_vblank_sync = 0;
 extern float display_scale_x_modifier;
 extern float display_scale_y_modifier;
 extern float display_deform_corners[8];
+extern int recalculate_homography;
 
 ///////////////////////////////////////////////////////////////////////////////
 static void gl_make_current();
@@ -65,6 +66,11 @@ static void gl_swap_buffers();
 
 static void gl_sync_lock();
 static void gl_sync_unlock();
+
+/////////////
+GLfloat homograpy[16];
+Point src[4];
+Point dest[4];
 
 
 
@@ -89,7 +95,7 @@ static void gl_reshape(int width, int height) {
 
 static int gl_reallocate_texture(int width, int height) {
 
-	
+	printf("reallocating texture");
 
 	glDeleteTextures (1, &_gl_texture_id);
 	glViewport (0, 0, _gl_width, _gl_height);
@@ -129,72 +135,45 @@ static void gl_init () {
 }
 
 static void opengl_draw (int width, int height, unsigned char* surf_data) {
-	
-	Point src[4];
-	Point dest[4];
-	GLfloat homograpy[16];
-
-	//we set it to the default - 0 translation
-	//and 1.0 scale for x y z and w
-	for(int i = 0; i < 16; i++){
-		if(i % 5 != 0) homograpy[i] = 0.0;
-		else homograpy[i] = 1.0;
-	} 
-
-	src[0].x = -_gl_quad_x ;
-	src[0].y = -_gl_quad_y ;
-
-	src[1].x = _gl_quad_x;
-	src[1].y = -_gl_quad_y;
-
-	src[2].x = _gl_quad_x;
-	src[2].y = _gl_quad_y;
-
-	src[3].x = -_gl_quad_x;
-	src[3].y = _gl_quad_y;
-
-	dest[0].x = src[0].x + display_deform_corners[0];
-	dest[0].y = src[0].y + display_deform_corners[1];
-	dest[1].x = src[1].x + display_deform_corners[2];
-	dest[1].y = src[1].y + display_deform_corners[3];
-	dest[2].x = src[2].x + display_deform_corners[4];
-	dest[2].y = src[2].y + display_deform_corners[5];
-	dest[3].x = src[3].x + display_deform_corners[6];
-	dest[3].y = src[3].y + display_deform_corners[7];
-
-
-	// dest[0].x = display_deform_corners[0] * (float)_gl_width;
-	// dest[0].y = display_deform_corners[1] * (float)_gl_height;
-	// dest[1].x = display_deform_corners[2] * (float)_gl_width;
-	// dest[1].y = display_deform_corners[3] * (float)_gl_height;
-	// dest[2].x = display_deform_corners[4] * (float)_gl_width;
-	// dest[2].y = display_deform_corners[5] * (float)_gl_height;
-	// dest[3].x = display_deform_corners[6] * (float)_gl_width;
-	// dest[3].y = display_deform_corners[7] * (float)_gl_height;
-
-
-
-	
-	
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	
-
-	
-
-
-	
 
 	glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	findHomography(src, dest, homograpy);
-	glMultMatrixf(homograpy);  
-
 
 	
+
+	//calculate it first time for 0 values, then only recalculate if values have changed	
+	if (recalculate_homography==1) {
+
+		src[0].x = -_gl_quad_x ;
+		src[0].y = -_gl_quad_y ;
+
+		src[1].x = _gl_quad_x;
+		src[1].y = -_gl_quad_y;
+
+		src[2].x = _gl_quad_x;
+		src[2].y = _gl_quad_y;
+
+		src[3].x = -_gl_quad_x;
+		src[3].y = _gl_quad_y;
+
+		dest[0].x = src[0].x + display_deform_corners[0];
+		dest[0].y = src[0].y + display_deform_corners[1];
+		dest[1].x = src[1].x + display_deform_corners[2];
+		dest[1].y = src[1].y + display_deform_corners[3];
+		dest[2].x = src[2].x + display_deform_corners[4];
+		dest[2].y = src[2].y + display_deform_corners[5];
+		dest[3].x = src[3].x + display_deform_corners[6];
+		dest[3].y = src[3].y + display_deform_corners[7];
+
+		findHomography(src, dest, homograpy);
+		
+		recalculate_homography = 0;
+	}
+
+	glMultMatrixf(homograpy);
 	glPushMatrix ();		
 
 	
