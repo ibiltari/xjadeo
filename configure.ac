@@ -167,6 +167,7 @@ AH_TEMPLATE([DND], [enable xjadeo x11/glx drag and drop])
 AH_TEMPLATE([XDLG], [enable xjadeo x11/glx context menu])
 AH_TEMPLATE([XFIB], [enable xjadeo x11 file browser])
 AH_TEMPLATE([COLOREQ], [enable XV and imlib2 color equalizer])
+AH_TEMPLATE([WARP], [enable dynamic projection warping])
 AH_TEMPLATE([TIMEMAP], [enable dynamic time scaling])
 AH_TEMPLATE([CROPIMG], [enable frame cropping])
 AH_TEMPLATE([WINMENU], [enable xjadeo windows context-menu])
@@ -178,6 +179,10 @@ AC_DEFINE(WINMENU)
 AC_DEFINE(XDLG)
 AC_DEFINE(XFIB)
 AC_DEFINE(COLOREQ)
+
+if test "x$enable_warp" != "xyes"; then
+	AC_DEFINE(WARP)
+fi
 
 if test "x$enable_timescale" != "xyes"; then
 	AC_DEFINE(TIMEMAP)

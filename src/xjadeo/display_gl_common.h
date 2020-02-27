@@ -18,7 +18,6 @@
  */
 
 #include "xjadeo.h"
-#include "homography.h"
 #ifdef HAVE_GL
 
 #include <stdio.h>
@@ -32,6 +31,10 @@
 #include "OpenGL/glu.h"
 #else
 #include <GL/glu.h>
+#endif
+
+#ifdef WARP
+#include "homography.h"
 #endif
 
 #ifndef GL_BGRA
@@ -54,11 +57,6 @@ static int          _gl_reexpose = 0;
 static unsigned int _gl_texture_id = 0;
 static int          _gl_vblank_sync = 0;
 
-extern float display_scale_x_modifier;
-extern float display_scale_y_modifier;
-extern float display_deform_corners[8];
-extern int recalculate_homography;
-
 ///////////////////////////////////////////////////////////////////////////////
 static void gl_make_current();
 static void gl_clear_current();
@@ -68,9 +66,11 @@ static void gl_sync_lock();
 static void gl_sync_unlock();
 
 /////////////
+#ifdef WARP
 GLfloat homograpy[16];
 Point src[4];
 Point dest[4];
+#endif
 
 
 
@@ -101,13 +101,7 @@ static int gl_reallocate_texture(int width, int height) {
 	glViewport (0, 0, _gl_width, _gl_height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	
-	//glOrtho (-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	glClear (GL_COLOR_BUFFER_BIT);
-
-	//gluPerspective (60, (GLfloat)_gl_width / (GLfloat)_gl_height, 1.0, 1000.0);
-
-
 	glGenTextures (1, &_gl_texture_id);
 	glBindTexture (GL_TEXTURE_RECTANGLE_ARB, _gl_texture_id);
 	glTexImage2D (GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA,
@@ -137,14 +131,10 @@ static void gl_init () {
 static void opengl_draw (int width, int height, unsigned char* surf_data) {
 
 	glMatrixMode(GL_MODELVIEW);
-	
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
-	
-
-	//calculate it first time for 0 values, then only recalculate if values have changed	
+#ifdef WARP
 	if (recalculate_homography==1) {
 
 		src[0].x = -_gl_quad_x ;
@@ -172,8 +162,9 @@ static void opengl_draw (int width, int height, unsigned char* surf_data) {
 		
 		recalculate_homography = 0;
 	}
-
 	glMultMatrixf(homograpy);
+#endif
+	
 	glPushMatrix ();		
 
 	
