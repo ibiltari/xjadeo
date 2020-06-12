@@ -23,6 +23,14 @@ Makefile.in
 # releases
 /*.tar.gz
 
+#package scripts
+/release.sh
+/x-osx-buildstack.sh
+/x-osx-bundle.sh
+/x-static.sh
+/x-win-bundle.sh
+/x-win-pbuild.sh
+
 # generated files
 /src/xjadeo/paths.h
 /src/qt-gui/mydirs.h
