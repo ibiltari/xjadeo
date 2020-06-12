@@ -1,0 +1,323 @@
+xjadeo (0.8.9~cuems-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.9
+  * added stagesoft/cuems custom modifications https://github.com/stagesoft/stagesoft-project
+
+ -- Ion Reguera <ion@stagelab.net>  Fri, 5 Jun 2020 17:39:43 +0100
+xjadeo (0.8.7-2) unstable; urgency=medium
+
+  * Use upstream hi-resolution icon.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 29 Nov 2016 14:35:46 +0100
+
+xjadeo (0.8.7-1) unstable; urgency=medium
+
+  * New upstream version 0.8.7
+  * Set dh/compat 10.
+  * Fix VCS fields.
+  * Bump Standards.
+  * Update copyright file.
+  * Fix hardening.
+  * Add local-option file.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 29 Nov 2016 09:38:04 +0100
+
+xjadeo (0.8.5-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.5
+  * Patch applied upstream.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Wed, 02 Dec 2015 07:18:32 +0100
+
+xjadeo (0.8.4-2) unstable; urgency=medium
+
+  * Add ffmpeg_2.9.patch (Closes: #803875)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 03 Nov 2015 06:39:02 +0100
+
+xjadeo (0.8.4-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.4
+  * Removed menu (to implement CTTE decision #741573)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Sun, 25 Oct 2015 05:04:14 +0100
+
+xjadeo (0.8.2-2) unstable; urgency=medium
+
+  * Build with ffmpeg.
+  * Drop old pdf documentation. (Closes: #793505)
+  * Mention on-line documentation in description.
+  * Enable parallel build.
+  * Tune .gitignore file.
+  * Drop build of qjadeo - deprecated.
+  * Remove unused build deps.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 08 Sep 2015 12:28:51 +0200
+
+xjadeo (0.8.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+    - Fix build issue with gcc 5. (Closes: #778184)
+  * debian/patches/0002-spelling.patch: Removed, applied upstream.
+  * debian/source/include-binaries: Add debian/xjadeo.pdf to prevent FTBFS
+    with recent dpkg versions. 
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Thu, 25 Jun 2015 22:23:35 +0200
+
+xjadeo (0.8.1-1) unstable; urgency=medium
+
+  * Bump Standards.
+  * Patch refreshed.
+  * configure patch dropped - applied upstream.
+  * Added spelling patch.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Mon, 23 Mar 2015 19:03:30 +0100
+
+xjadeo (0.8.0-2) unstable; urgency=low
+
+  * Add patch fixing build on kfreebsd,hurd (Closes: #763574)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Wed, 01 Oct 2014 11:01:56 +0200
+
+xjadeo (0.8.0-1) unstable; urgency=low
+
+  * Remove TODO file from docs.
+  * Refresh patch to build with latest libav.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 30 Sep 2014 14:45:55 +0200
+
+xjadeo (0.7.7-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.7.7
+  * Refreshed patches.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 10 Jun 2014 09:13:56 +0200
+
+xjadeo (0.7.6-3) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable
+  * Recompile against libav10 (Closes: #739431)
+  * Bump standards version.
+
+ -- Reinhard Tartler <siretart@tauware.de>  Sun, 11 May 2014 22:05:41 -0400
+
+xjadeo (0.7.6-2) experimental; urgency=low
+
+  * Team upload.
+  * Compile and fix FTBFS against libav10 (Closes: #739431)
+
+ -- Reinhard Tartler <siretart@tauware.de>  Sun, 23 Feb 2014 15:05:14 +0000
+
+xjadeo (0.7.6-1) unstable; urgency=low
+
+  * Removed fix_warning.patch.
+  * Enable guild qtgui again.
+  * Added keywords to desktop file.
+  * Removed hardening-wrapper.
+  * Update copyright file.
+  * Don't sign tags.
+  * Added patch to fix hardening for qjadeo.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Sat, 10 Aug 2013 23:00:52 +0200
+
+xjadeo (0.7.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Added libltc-dev to build dep.
+  * Added libsdl1.2-dev to build dep.
+  * Remove DMUA.
+  * Bump standards.
+  * Set dh/compat 9 to fix hardening.
+  * Fix VCS canonical URLs.
+  * Build with hardening-wrapper.
+  * Added patch to fix build with hardening-wrapper.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 07 May 2013 00:10:50 +0200
+
+xjadeo (0.6.4-1) unstable; urgency=low
+
+  [ Jaromír Mikeš ]
+  * New upstream release.
+
+  [ Alessio Treglia ]
+  * Set DMUA.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Fri, 18 May 2012 22:29:59 +0200
+
+xjadeo (0.6.3-1) unstable; urgency=low
+
+  * New upstream bugfix only release.
+  * Refresh patches.
+  * Replace autootools-dev with dh-autoreconf and pass --as-needed to
+    autoreconf.
+  * Update debian/copyright to copyright format 1.0.
+  * Promote transcode to Recommends.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 18 Apr 2012 10:48:58 +0200
+
+xjadeo (0.6.2-1) unstable; urgency=low
+
+  * New upstream stable release.
+  * Replace negated list of architectures with linux-any (Closes: #634808)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Wed, 12 Oct 2011 03:32:47 +0200
+
+xjadeo (0.6.1-1) unstable; urgency=low
+
+  * New upstream stable release.  
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Fri, 15 Jul 2011 22:05:17 +0200
+
+xjadeo (0.6.0-1) unstable; urgency=low
+
+  * New upstream stable release.
+  * Rewrite debian/copyright according to DEP-5 rev.174
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 09 Jul 2011 11:11:36 +0200
+
+xjadeo (0.6.0~rc7-3) unstable; urgency=low
+
+  * Drop LASH support.
+  * Re-introduce doc-base file.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 19 May 2011 14:32:48 +0200
+
+xjadeo (0.6.0~rc7-2) unstable; urgency=low
+
+  * Upload to unstable.
+  * Fix misspelling in the Build-Depends field.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 10 Feb 2011 12:49:19 +0100
+
+xjadeo (0.6.0~rc7-1) experimental; urgency=low
+
+  * Imported Upstream version 0.6.0~rc7
+  * Don't install NEWS file as it contains obsolete information.
+  * Install PDF manual.
+  * Change section to 'video'.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 24 Nov 2010 18:15:02 +0100
+
+xjadeo (0.6.0~rc6-1) experimental; urgency=low
+
+  * Drop libportmidi-dev on kfreebsd-*,hurd-i386 architectures.
+  * Imported Upstream version 0.6.0~rc6.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 17 Nov 2010 00:00:18 +0100
+
+xjadeo (0.6.0~rc5-1) experimental; urgency=low
+
+  * Imported Upstream version 0.6.0~rc5.
+  * Don't build tools in contrib, they are unnecessary for end-users.
+
+ -- Alessio Treglia <alessio@debian.org>  Fri, 12 Nov 2010 14:44:12 +0100
+
+xjadeo (0.6.0~rc4-1) experimental; urgency=low
+
+  * Imported Upstream version 0.6.0~rc4.
+  * Install qjadeo.png only.
+  * Build contrib stuff.
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 11 Nov 2010 16:55:45 +0100
+
+xjadeo (0.6.0~rc3-1) experimental; urgency=low
+
+  * debian/gbp.conf: Drop non-defaults options.
+  * debian/control: 'JACK' should be uppercase.
+  * Imported Upstream version 0.6.0~rc3.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 10 Nov 2010 22:57:48 +0100
+
+xjadeo (0.6.0~rc2-1) experimental; urgency=low
+
+  * Update debian/watch file to handle upstream RC release numbers.
+  * Imported Upstream version 0.6.0~rc2.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 10 Nov 2010 18:29:18 +0100
+
+xjadeo (0.6.0~rc1-1) experimental; urgency=low
+
+  * Update refs in debian/gbp.conf
+  * Imported Upstream version 0.6.0~rc1
+  * Build-Depends on libltcsmpte-dev.
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 09 Nov 2010 23:25:12 +0100
+
+xjadeo (0.4.13-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update Vcs tags.
+  * Move mencoder to Recommends.
+  * Drop patches, applied upstream.
+  * Merge Ubuntu changelog entries.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 04 Aug 2010 11:39:34 +0200
+
+xjadeo (0.4.12-1ubuntu1) maverick; urgency=low
+
+  * Merge with debian unstable, remaining changes:
+    - Move mencoder,transcode from Suggests to Recommends.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Tue, 27 Jul 2010 11:55:15 +0200
+
+xjadeo (0.4.12-1) unstable; urgency=low
+
+  [ Jaromír Mikeš ]
+  * New upstream release.
+  * Add patch to solve spelling error.
+
+  [ Alessio Treglia ]
+  * Bump Standards.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Mon, 26 Jul 2010 14:43:27 +0200
+
+xjadeo (0.4.11-1ubuntu1) maverick; urgency=low
+
+  * Move mencoder,transcode from Suggests to Recommends.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Wed, 21 Jul 2010 19:09:07 +0200
+
+xjadeo (0.4.11-1build1) maverick; urgency=low
+
+  * No-change rebuild due to jackd -> jackd2 transition.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Wed, 21 Jul 2010 11:58:05 +0200
+
+xjadeo (0.4.11-1) unstable; urgency=low
+
+  [ Jaromír Mikeš ]
+  * New upstream release:
+     - new default parameters:
+       + screen-update-fps = filefps (use '-f 10' for prev. default)
+       + MTC-quater-frame: on (use '-c' to disable it)
+     - added JACK-MIDI port for MTC (./configure --enable-midi=jack )
+     - System-V IPC remote ctrl mode (OSX does not support POSIX-MQ)
+     - added '{' and '}' keyboard shortcuts to modify time-offset in
+       larger steps
+     - many small remote-ctl extensions for ardour3 integration
+       + allow to disable some GUI interactions (close window,
+         left-mouse-click)
+       + added aliases for full-screen & position remote-ctrl commands
+         (alphabetical order of commands now does the right thing:
+         size, position, fullscreen -> size, xy, zoom)
+  * jack-midi port for MTC allowed
+
+  [ Alessio Treglia ]
+  * debian/rules:
+    - Rely on dh_auto_configure to call ./configure script.
+    - Add -Wl,--as-needed to linking options.
+  * debian/control:
+    - Drop ALSA support for those architectures which don't provide it.
+    - Overrides requires debhelper >= 7.0.50~
+
+ -- Alessio Treglia <alessio@debian.org>  Thu, 15 Jul 2010 19:40:54 +0200
+
+xjadeo (0.4.10-1) unstable; urgency=low
+
+  * Initial release (Closes: #521768)  
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Sat, 10 Jul 2010 12:01:22 +0200
