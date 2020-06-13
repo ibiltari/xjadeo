@@ -1,4 +1,4 @@
-xjadeo (0.8.9~cuems-1) unstable; urgency=medium
+xjadeo (0.8.9~cuems-1) buster; urgency=medium
 
   * Imported Upstream version 0.8.9
   * added stagesoft/cuems custom modifications https://github.com/stagesoft/stagesoft-project
