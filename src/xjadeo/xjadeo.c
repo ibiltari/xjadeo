@@ -104,6 +104,9 @@ uint64_t    osd_vtc_oob;
 //------------------------------------------------
 // globals
 //------------------------------------------------
+#ifdef CUEMS
+int end_notified = 0;
+#endif
 #ifdef WARP
 //osc scale modification
 double display_scale_x_modifier = 1;
@@ -1679,6 +1682,12 @@ void display_frame (int64_t timestamp, int force_update) {
 
 	// want_ignstart here ??
 	if (timestamp < 0 || timestamp >= frames) {
+#ifdef CUEMS
+		if (!end_notified){
+			printf("MOVIE_END\n");
+			end_notified = 1;
+		}
+#endif CUEMS
 		OSD_frame[0] = '\0';
 		int need_redisplay = force_update || displaying_valid_frame;
 		if (OSD_mode&OSD_SMPTE) {
@@ -1774,6 +1783,9 @@ void display_frame (int64_t timestamp, int force_update) {
 		}
 		sws_scale (pSWSCtx, (const uint8_t * const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameFMT->data, dstStride);
 		displaying_valid_frame = 1;
+#ifdef CUEMS
+		end_notified = 0;
+#endif CUEMS
 		if (!splashed) {
 			splash(buffer);
 		}
