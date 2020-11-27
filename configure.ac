@@ -184,13 +184,14 @@ AC_DEFINE(DND)
 AC_DEFINE(WINMENU)
 AC_DEFINE(XDLG)
 AC_DEFINE(XFIB)
-AC_DEFINE(DRAW_CROSS)
+if test "x$enable_cuems" != "xyes"; then
+	AC_DEFINE(DRAW_CROSS)
+fi
 AC_DEFINE(COLOREQ)
 
 if test "x$enable_cuems" = "xyes"; then
 	AC_DEFINE(CUEMS)
 	AC_DEFINE(WARP)
-	AC_DEFINE(DRAW_CROSS, 0)
 fi
 
 if test "x$enable_warp" = "xyes"; then
