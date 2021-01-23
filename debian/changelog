@@ -1,3 +1,9 @@
+xjadeo (0.8.9~cuems-2) buster; urgency=medium
+
+  * disable OSD at build time
+
+ -- Ion Reguera <ion@stagelab.net>  Sat, 23 Jan 2021 21:23:16 +0100
+
 xjadeo (0.8.9~cuems-1) buster; urgency=medium
 
   * Imported Upstream version 0.8.9
