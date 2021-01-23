@@ -168,7 +168,11 @@ int want_verbose =0;	/* --verbose */
 int want_avverbose =0;	/* --avverbose */
 int want_genpts =0;	/* --genpts */
 int want_ignstart =0;	/* --ignorefileoffset */
+#ifndef DISABLE_OSD
 int want_nosplash =0;	/* --nosplash */
+#else
+int want_nosplash =1;  /* DISABLE_OSD disables also splash */
+#endif
 int want_noindex =0;	/* --noindex */
 int start_ontop =0;	/* --ontop // -a */
 int start_fullscreen =0;/* --fullscreen // -s */

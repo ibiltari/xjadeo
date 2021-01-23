@@ -32,11 +32,13 @@ AC_ARG_ENABLE(qtgui,       AC_HELP_STRING([--enable-qtgui],[Build the Qt GUI con
 AC_ARG_WITH(qt4prefix,     AS_HELP_STRING([--with-qt4prefix], [prefix for Qt4 installation, e.g. "/usr/lib/qt4"]), qt4prefix="$withval", qt4prefix="")
 AC_ARG_WITH(qmakeargs,     AS_HELP_STRING([--with-qmakeargs], [specify custom qmake arguments]), qmakeargs="$withval", qmakeargs="")
 AC_ARG_ENABLE(contrib,     AC_HELP_STRING([--enable-contrib], [Compile and install code in contrib folder (default:off)]))
+AC_ARG_ENABLE(cuems,       AC_HELP_STRING([--enable-cuems], [enable CUEMS mode, also enbales WARP and XINERAMA, disables DRAW_CROSS]))
 AC_ARG_ENABLE(warp,        AC_HELP_STRING([--enable-warp], [enable scale and projection warping (opengl only) - experimental - DO NOT USE]))
+AC_ARG_ENABLE(osd,         AC_HELP_STRING([--disable--osd], [completely disable On Screen Display]))
 AC_ARG_ENABLE(timescale,   AC_HELP_STRING([--enable-timescale], [enable time-mapping/loop-playback support - experimental - DO NOT USE]))
 AC_ARG_ENABLE(framecrop,   AC_HELP_STRING([--enable-framecrop], [hardcoded frame cropping - experimental - DO NOT USE]))
 AC_ARG_ENABLE(weakjack,    AC_HELP_STRING([--enable-weakjack], [load libjack at runtime (weak linking -- always enabled on OSX and Windows)]))
-AC_ARG_ENABLE(xinerama,    AC_HELP_STRING([--enable-xinerama],[Enable xinerama support.]))
+AC_ARG_ENABLE(xinerama,    AC_HELP_STRING([--enable-xinerama],[Enable xinerama support - experimental - DO NOT USE]))
 
 
 LIBPREF=lib
@@ -170,7 +172,9 @@ AH_TEMPLATE([DND], [enable xjadeo x11/glx drag and drop])
 AH_TEMPLATE([XDLG], [enable xjadeo x11/glx context menu])
 AH_TEMPLATE([XFIB], [enable xjadeo x11 file browser])
 AH_TEMPLATE([COLOREQ], [enable XV and imlib2 color equalizer])
+AH_TEMPLATE([CUEMS], [enable CUEMS mode, also enbales WARP XINERAMA and DISABLE_OSD, disables DRAW_CROSS])
 AH_TEMPLATE([WARP], [enable dynamic projection warping, only opengl supported])
+AH_TEMPLATE([DISABLE_OSD], [completely disable On Screen Display])
 AH_TEMPLATE([TIMEMAP], [enable dynamic time scaling])
 AH_TEMPLATE([CROPIMG], [enable frame cropping])
 AH_TEMPLATE([DRAW_CROSS], [paint a X on screen when unable to decode or display a frame.])
@@ -182,11 +186,23 @@ AC_DEFINE(DND)
 AC_DEFINE(WINMENU)
 AC_DEFINE(XDLG)
 AC_DEFINE(XFIB)
-AC_DEFINE(DRAW_CROSS)
+if test "x$enable_cuems" != "xyes"; then
+	AC_DEFINE(DRAW_CROSS)
+fi
 AC_DEFINE(COLOREQ)
+
+if test "x$enable_cuems" = "xyes"; then
+	AC_DEFINE(CUEMS)
+	AC_DEFINE(WARP)
+	AC_DEFINE(DISABLE_OSD)
+fi
 
 if test "x$enable_warp" = "xyes"; then
 	AC_DEFINE(WARP)
+fi
+
+if test "x$disable_osd" = "xyes"; then
+	AC_DEFINE(DISABLE_OSD)
 fi
 
 if test "x$enable_timescale" != "xyes"; then
@@ -267,7 +283,7 @@ AS_IF([test -z "$PLATFORM_OSX$PLATFORM_WINDOWS"], [
 		AC_MSG_ERROR([Xpm support is mandatory on this platform - install libxpm development package.]))
 ])
 
-if test "x$enable_xinerama" = "xyes" ; then
+if test "x$enable_xinerama" = "xyes" -o "x$enable_cuems" = "xyes"; then
     PKG_CHECK_MODULES(DPY_XINERAMA, xinerama, [AC_DEFINE(HAVE_LIBXINERAMA) XV_LIBS="$XV_LIBS -lXinerama" HAVE_LIBXINERAMA=1 ], [])
 fi
 

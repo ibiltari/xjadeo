@@ -171,18 +171,26 @@ int gl_open_window () {
         XineramaIsActive(_gl_display))
     {
 		_gl_displays_info=XineramaQueryScreens(_gl_display, &nr_xinerama_screens);
-		fprintf(stderr, "Xinerama is active\n", nr_xinerama_screens);
-		fprintf(stderr, "Xinerama reports %d screens\n", nr_xinerama_screens);
+		if (!want_quiet){
+			fprintf(stderr, "Xinerama is active\n", nr_xinerama_screens);
+			fprintf(stderr, "Xinerama reports %d screens\n", nr_xinerama_screens);
+		}
 		if (nr_xinerama_screens>0) {
 			if (start_screen > -1 && start_screen <= nr_xinerama_screens){
 				_wm_xposition = _gl_displays_info[start_screen].x_org;
 				_wm_yposition = _gl_displays_info[start_screen].y_org;
 			}
                 for (int x=0; x<nr_xinerama_screens; ++x) {
-					fprintf(stderr, "Head %d of %d :", x+1, nr_xinerama_screens);
-					fprintf(stderr, " %dx%d at %d, %d\n", _gl_displays_info[x].width, _gl_displays_info[x].height, _gl_displays_info[x].x_org, _gl_displays_info[x].y_org);
+					if (!want_quiet){
+						fprintf(stderr, "Head %d of %d :", x+1, nr_xinerama_screens);
+						fprintf(stderr, " %dx%d at %d, %d\n", _gl_displays_info[x].width, _gl_displays_info[x].height, _gl_displays_info[x].x_org, _gl_displays_info[x].y_org);
+					}
 				}
-		} else fprintf(stderr, "Xinerama reports none");
+		} else {
+			if (!want_quiet){
+				fprintf(stderr, "Xinerama reports none");
+			}
+		}
 		XFree(_gl_displays_info);
     }
 	#endif

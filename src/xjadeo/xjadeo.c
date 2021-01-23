@@ -104,6 +104,9 @@ uint64_t    osd_vtc_oob;
 //------------------------------------------------
 // globals
 //------------------------------------------------
+#ifdef CUEMS
+int end_notified = 1;
+#endif
 #ifdef WARP
 //osc scale modification
 double display_scale_x_modifier = 1;
@@ -376,6 +379,15 @@ void event_loop (void) {
 #endif
 			fflush (stdout);
 		}
+
+#ifdef CUEMS
+		if (newFrame >= frames & !end_notified) {
+			printf("MOVIE_END\n");
+			end_notified = 1;
+		}else if (newFrame > 0 & newFrame < frames & end_notified ) {  // xjadeo avanzes 3-4 frames before latching timecode so alwais gets to frame 3-4
+			end_notified = 0;
+		}
+#endif
 
 		handle_X_events();
 		js_apply();

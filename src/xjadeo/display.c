@@ -601,7 +601,7 @@ static void update_smptestring () {
 
 void render_buffer (uint8_t *mybuffer) {
 	if (!mybuffer) return;
-
+#ifndef DISABLE_OSD
 	// render OSD on buffer
 	if (OSD_mode & (OSD_FRAME | OSD_VTC))
 		OSD_render (VO[VOutput].render_fmt, mybuffer, OSD_frame, OSD_fx, OSD_fy, MINWH_FRAMEN);
@@ -672,7 +672,7 @@ void render_buffer (uint8_t *mybuffer) {
 		}
 		OSD_bar (VO[VOutput].render_fmt, mybuffer, 100. * BAR_Y, 0, frames - 1, dispFrame, sbox);
 	}
-
+#endif
 	VO[VOutput].render(buffer); // buffer = mybuffer (so far no share mem or sth)
 }
 
